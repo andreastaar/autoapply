@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: autoapply_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-autoapply}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-autoapply123}
+      POSTGRES_DB: ${DB_NAME:-autoapply}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-autoapply}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: autoapply_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-autoapply}
+      DB_PASSWORD: ${DB_PASSWORD:-autoapply123}
+      DB_NAME: ${DB_NAME:-autoapply}
+      JWT_SECRET: ${JWT_SECRET:-change_this_secret_in_production}
+      PORT: 3000
+    ports:
+      - '3000:3000'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+    container_name: autoapply_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
+
+volumes:
+  postgres_data:
