@@ -1,8 +1,16 @@
-[build]
+[services.autoapply.build]
 builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
-[deploy]
+[services.autoapply.deploy]
 startCommand = "node dist/main"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[services.gentle-flow.build]
+builder = "DOCKERFILE"
+dockerfilePath = "frontend/Dockerfile"
+
+[services.gentle-flow.deploy]
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
