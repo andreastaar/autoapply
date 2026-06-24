@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const MOBILE_API = 'https://autoapply-production-5b15.up.railway.app';
+const isNative = !!(window as any).Capacitor?.isNativePlatform?.();
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api',
+  baseURL: isNative
+    ? `${MOBILE_API}/api`
+    : import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api`
+    : '/api',
 });
 
 api.interceptors.request.use((config) => {
