@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.db
+*.log
+.env
+autopilot.db
+linkedin_cookies.json
+fill.log
+server.log
+/tmp/
