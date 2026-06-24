@@ -60,6 +60,25 @@ export class Profile {
   @Column({ type: 'text', nullable: true })
   targetCompanies: string;
 
+  // Work authorization (OPT/CPT)
+  @Column({ nullable: true })
+  workAuthorization: string; // 'opt', 'cpt', 'h1b', 'citizen', 'green_card', 'other'
+
+  @Column({ nullable: true })
+  optStartDate: string;
+
+  @Column({ nullable: true })
+  optExpiryDate: string;
+
+  @Column({ nullable: true })
+  cptStartDate: string;
+
+  @Column({ nullable: true })
+  cptExpiryDate: string;
+
+  @Column({ default: false })
+  needsSponsorship: boolean;
+
   @UpdateDateColumn()
   updatedAt: Date;
 }

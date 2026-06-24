@@ -15,11 +15,14 @@ export default function Navbar() {
       <Link to="/dashboard" className="text-xl font-bold tracking-tight">
         AutoApply
       </Link>
-      <div className="flex items-center gap-5 text-sm font-medium">
+      <div className="flex items-center gap-4 text-sm font-medium flex-wrap">
+        <Link to="/jobs" className="hover:text-indigo-200 transition">Jobs</Link>
+        <Link to="/tracker" className="hover:text-indigo-200 transition">Tracker</Link>
+        <Link to="/pipeline" className="hover:text-indigo-200 transition">Pipeline</Link>
+        <Link to="/reports" className="hover:text-indigo-200 transition">Reports</Link>
         <Link to="/opportunities" className="hover:text-indigo-200 transition">Opportunities</Link>
         <Link to="/linkedin" className="hover:text-indigo-200 transition">LinkedIn</Link>
         <Link to="/outreach" className="hover:text-indigo-200 transition">Outreach</Link>
-        <Link to="/applications" className="hover:text-indigo-200 transition">Applications</Link>
         <Link to="/profile" className="hover:text-indigo-200 transition">Profile</Link>
         <button onClick={logout} className="bg-white text-brand-600 px-3 py-1 rounded hover:bg-indigo-100 transition">
           Logout
